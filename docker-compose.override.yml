@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      dockerfile: Dockerfile.dev
+
+  api:
+    build:
+      dockerfile: Dockerfile.dev

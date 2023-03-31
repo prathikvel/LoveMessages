@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  proxy:
+    build: ./proxy
+    ports: [80:80]
+    depends_on: [app, api]
+
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile.prod
+    volumes:
+      - ./app/src:/app/src
+      - ./app/public:/app/public
+    env_file: ./.env
+    depends_on: [api]
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile.prod
+    volumes:
+      - ./api/src:/api/src
+    env_file: ./.env
+    depends_on: [db]
+
+  db:
+    image: mongo
+    volumes:
+      - ./db/data:/data/db
+    env_file: ./.env
